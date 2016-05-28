@@ -5,20 +5,6 @@
 
 using namespace std;
 
-int factorial(int n)
-{
-    return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
-}
-
-// function to calculate the Pascal's triangle value of an element
-// 0-based row and column
-int nCk(int row, int column)
-{
-    int numerator = factorial(row);
-    int denominator = factorial(column) * factorial(row - column);
-    return numerator / denominator;
-}
-
 vector<vector<int> > buildPascalsTriangle(int A) 
 {
     vector<vector<int>> result(A);
@@ -26,7 +12,13 @@ vector<vector<int> > buildPascalsTriangle(int A)
     {
         for (size_t j = 0; j <= i; j++)
         {
-            result[i].push_back(nCk(i, j));
+            int n = 1;
+            if ((i > 1) && (j > 0) && (j < i))
+            {
+                n = result[i - 1][j] + result[i - 1][j - 1];
+            }
+
+            result[i].push_back(n);
         }
     }
     return result;
